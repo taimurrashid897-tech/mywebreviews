@@ -1,0 +1,306 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>My Web Work</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+  /* Layout: single column portfolio. Hero, two project cards, then a shared review wall with a form on the left and the live list on the right. */
+  :root{
+    --bg:#f5f6f4; --surface:#ffffff; --line:#dfe3df; --fg:#141a17; --muted:#5a655f;
+    --accent:#0b8a5c; --accent-fg:#ffffff; --link:#2c4fd0; --star:#d98a00; --danger:#b4332a;
+    --display:'Space Grotesk','Segoe UI',system-ui,sans-serif;
+    --body:'DM Sans','Segoe UI',system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0e1311; --surface:#151c19; --line:#25302b; --fg:#e9efeb; --muted:#93a19a;
+      --accent:#4fd69b; --accent-fg:#05150e; --link:#8fa6ff; --star:#f2b53a; --danger:#ff8a80;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1311; --surface:#151c19; --line:#25302b; --fg:#e9efeb; --muted:#93a19a;
+    --accent:#4fd69b; --accent-fg:#05150e; --link:#8fa6ff; --star:#f2b53a; --danger:#ff8a80;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  body{
+    background:var(--bg); color:var(--fg); font-family:var(--body); font-size:16px; line-height:1.6;
+    padding-block:0;
+    padding-left:max(16px, env(safe-area-inset-left, 0px));
+    padding-right:max(16px, env(safe-area-inset-right, 0px));
+  }
+  .wrap{max-width:1040px;margin:0 auto}
+  header{padding:56px 0 24px}
+  .badge{display:inline-block;font-size:13px;color:var(--accent);border:1px solid var(--line);padding:3px 12px;border-radius:99px;background:var(--surface)}
+  h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,6.4vw,56px);line-height:1.05;letter-spacing:-0.02em;margin:18px 0 12px;text-wrap:balance}
+  h1 em{font-style:normal;color:var(--accent)}
+  .lead{color:var(--muted);max-width:56ch;margin:0 0 24px}
+  .nav{display:flex;gap:10px;flex-wrap:wrap}
+  .btn{display:inline-block;border:0;cursor:pointer;font:600 15px var(--body);background:var(--accent);color:var(--accent-fg);padding:10px 20px;border-radius:8px;text-decoration:none}
+  .btn:hover{filter:brightness(1.07)}
+  .btn.ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
+  .btn:focus-visible,input:focus-visible,textarea:focus-visible,.star:focus-visible,a:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+  .btn[disabled]{opacity:.55;cursor:not-allowed}
+  .stats{display:flex;gap:28px;flex-wrap:wrap;margin-top:32px;padding-top:20px;border-top:1px solid var(--line)}
+  .stat b{display:block;font:700 28px var(--display);font-variant-numeric:tabular-nums}
+  .stat small{color:var(--muted);font-size:13px}
+  section{padding:36px 0}
+  h2{font-family:var(--display);font-size:26px;letter-spacing:-0.01em;margin:0 0 20px}
+  .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr))}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px;min-width:0}
+  .card h3{margin:0;font:600 19px var(--display)}
+  .card p{margin:0;color:var(--muted);font-size:15px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chips span{font-size:12px;border:1px solid var(--line);padding:2px 10px;border-radius:99px;color:var(--muted)}
+  .visit{margin-top:auto;padding-top:6px;color:var(--link);font-weight:600;text-decoration:none}
+  .visit:hover{text-decoration:underline}
+  .rv{display:grid;gap:20px;grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:start}
+  @media (max-width:760px){.rv{grid-template-columns:minmax(0,1fr)}}
+  form.card{gap:14px}
+  label{font-size:14px;font-weight:600;display:block;margin-bottom:4px}
+  input[type=text],textarea{width:100%;font:inherit;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+  textarea{min-height:110px;resize:vertical}
+  .stars{display:flex;gap:2px}
+  .star{background:none;border:0;cursor:pointer;font-size:30px;line-height:1;padding:2px 4px;color:var(--line)}
+  .star.on{color:var(--star)}
+  .hint{font-size:13px;color:var(--muted)}
+  .msg{font-size:14px;min-height:20px}
+  .msg.err{color:var(--danger)}
+  .msg.ok{color:var(--accent)}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .linkbtn{background:none;border:0;cursor:pointer;color:var(--muted);font:inherit;font-size:13px;text-decoration:underline;padding:0}
+  .list{display:flex;flex-direction:column;gap:12px;min-width:0}
+  .rev{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;min-width:0}
+  .rev .top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
+  .rev .nm{font-weight:600;overflow-wrap:anywhere}
+  .rev .st{color:var(--star);letter-spacing:2px}
+  .rev .dt{font-size:12px;color:var(--muted)}
+  .rev p{margin:6px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}
+  .rev.mine{border-color:var(--accent)}
+  .empty{border:1px dashed var(--line);border-radius:12px;padding:28px 20px;color:var(--muted);text-align:center}
+  footer{border-top:1px solid var(--line);padding:24px 0 48px;color:var(--muted);font-size:14px}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap">
+
+<div class="wrap">
+  <header>
+    <span class="badge">Taking new website projects</span>
+    <h1>I build <em>websites</em> that people actually use.</h1>
+    <p class="lead">Two live sites below, and a review wall where anyone who has used my work can leave a rating and read what others said.</p>
+    <div class="nav">
+      <a class="btn" href="#work">See my work</a>
+      <a class="btn ghost" href="#reviews">Read or write a review</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="s-sites">2</b><small>Websites made</small></div>
+      <div class="stat"><b id="s-rev">0</b><small>Reviews</small></div>
+      <div class="stat"><b id="s-avg">–</b><small>Average rating</small></div>
+    </div>
+  </header>
+
+  <section id="work">
+    <h2>Websites I've made</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Pillars of Fortune SMP</h3>
+        <p>Status website for a Minecraft SMP. Shows the server IP and ports with copy buttons, players online, the four game types and the Discord invite.</p>
+        <div class="chips"><span>Minecraft</span><span>Live status</span><span>Community</span></div>
+        <a class="visit" href="https://pillars-of-fortune.vercel.app/" target="_blank" rel="noopener">Visit website →</a>
+      </div>
+      <div class="card">
+        <h3>just4le._ Clothing Shop</h3>
+        <p>Online store for a drop-shoulder tee and acid wash brand. Product sections, size chart in inches, an order form with Cash on delivery, bKash and Nagad, and an admin area for adding products.</p>
+        <div class="chips"><span>Online shop</span><span>Orders</span><span>Admin panel</span></div>
+        <a class="visit" href="https://just4le-gtvu.vercel.app/" target="_blank" rel="noopener">Visit website →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews">
+    <h2>Reviews</h2>
+    <div class="rv">
+      <form class="card" id="form" autocomplete="off">
+        <h3 id="form-title">Leave a review</h3>
+        <div>
+          <label for="f-name">Your name</label>
+          <input type="text" id="f-name" maxlength="40" placeholder="e.g. Rafi">
+        </div>
+        <div>
+          <label id="f-rate-l">Rating</label>
+          <div class="stars" id="f-stars" role="group" aria-labelledby="f-rate-l"></div>
+        </div>
+        <div>
+          <label for="f-text">Your review</label>
+          <textarea id="f-text" maxlength="600" placeholder="What was it like working together?"></textarea>
+        </div>
+        <div class="row">
+          <button class="btn" type="submit" id="f-send">Post review</button>
+          <button class="linkbtn" type="button" id="f-del" hidden>Delete my review</button>
+        </div>
+        <div class="msg" id="f-msg" role="status"></div>
+        <div class="hint" id="f-hint">One review per person. You can edit or delete yours later.</div>
+      </form>
+      <div class="list" id="list">
+        <div class="empty">Loading reviews…</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>© <span id="yr"></span> · My Web Work</footer>
+</div>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  $('yr').textContent = new Date().getFullYear();
+
+  var db = null, uid = null, canWrite = false;
+  var reviews = [];
+  var rating = 0;
+  var delArmed = false;
+
+  /* stars input */
+  var starsBox = $('f-stars');
+  for (var i = 1; i <= 5; i++) {
+    (function(n){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'star'; b.textContent = '★';
+      b.setAttribute('aria-label', n + ' star' + (n > 1 ? 's' : ''));
+      b.addEventListener('click', function(){ setRating(n); });
+      starsBox.appendChild(b);
+    })(i);
+  }
+  function setRating(n){
+    rating = n;
+    Array.prototype.forEach.call(starsBox.children, function(b, idx){
+      b.classList.toggle('on', idx < n);
+      b.setAttribute('aria-pressed', String(idx < n));
+    });
+  }
+
+  function msg(text, kind){
+    var m = $('f-msg'); m.textContent = text || ''; m.className = 'msg' + (kind ? ' ' + kind : '');
+  }
+
+  function setLocked(reason){
+    ['f-name','f-text','f-send'].forEach(function(id){ $(id).disabled = true; });
+    Array.prototype.forEach.call(starsBox.children, function(b){ b.disabled = true; });
+    $('f-hint').textContent = reason;
+  }
+
+  function render(){
+    var list = $('list');
+    list.textContent = '';
+    var n = reviews.length;
+    $('s-rev').textContent = n;
+    $('s-avg').textContent = n ? (reviews.reduce(function(a, r){ return a + r.rating; }, 0) / n).toFixed(1) : '–';
+
+    if (!db) {
+      var e0 = document.createElement('div'); e0.className = 'empty';
+      e0.textContent = 'Reviews load when this page is opened on Claude while signed in.';
+      list.appendChild(e0); return;
+    }
+    if (!n) {
+      var e = document.createElement('div'); e.className = 'empty';
+      e.textContent = 'No reviews yet. Be the first to write one.';
+      list.appendChild(e); return;
+    }
+    reviews.forEach(function(r){
+      var card = document.createElement('div');
+      card.className = 'rev' + (r.id === uid ? ' mine' : '');
+      var top = document.createElement('div'); top.className = 'top';
+      var nm = document.createElement('span'); nm.className = 'nm';
+      nm.textContent = r.name + (r.id === uid ? ' (you)' : '');
+      var st = document.createElement('span'); st.className = 'st';
+      st.textContent = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+      st.setAttribute('aria-label', r.rating + ' out of 5');
+      top.appendChild(nm); top.appendChild(st);
+      var p = document.createElement('p'); p.textContent = r.text;
+      var dt = document.createElement('div'); dt.className = 'dt';
+      dt.textContent = r.ts ? new Date(r.ts).toLocaleDateString(undefined, {year:'numeric', month:'short', day:'numeric'}) : '';
+      card.appendChild(top); card.appendChild(p); card.appendChild(dt);
+      list.appendChild(card);
+    });
+  }
+
+  function syncForm(){
+    var mine = reviews.filter(function(r){ return r.id === uid; })[0];
+    $('form-title').textContent = mine ? 'Edit your review' : 'Leave a review';
+    $('f-send').textContent = mine ? 'Update review' : 'Post review';
+    $('f-del').hidden = !mine;
+  }
+
+  var filled = false;
+  function prefillOnce(){
+    if (filled) return;
+    var mine = reviews.filter(function(r){ return r.id === uid; })[0];
+    if (mine) {
+      $('f-name').value = mine.name; $('f-text').value = mine.text; setRating(mine.rating); filled = true;
+    }
+  }
+
+  $('form').addEventListener('submit', async function(ev){
+    ev.preventDefault();
+    if (!db || !uid || !canWrite) return;
+    var name = $('f-name').value.trim(), text = $('f-text').value.trim();
+    if (!name) { msg('Enter your name.', 'err'); return; }
+    if (!rating) { msg('Pick a star rating.', 'err'); return; }
+    if (!text) { msg('Write a few words about your experience.', 'err'); return; }
+    $('f-send').disabled = true; msg('Posting…');
+    try {
+      await db.doc('reviews/' + uid).set({ name: name, rating: rating, text: text, ts: Date.now() });
+      msg('Thanks, your review is live.', 'ok');
+    } catch (e) {
+      msg(e && e.code === 'quota_exceeded' ? 'The review wall is full.' : 'Could not post your review. Try again in a moment.', 'err');
+    }
+    $('f-send').disabled = false;
+  });
+
+  $('f-del').addEventListener('click', async function(){
+    if (!db || !uid) return;
+    if (!delArmed) {
+      delArmed = true; $('f-del').textContent = 'Click again to delete';
+      setTimeout(function(){ delArmed = false; $('f-del').textContent = 'Delete my review'; }, 4000);
+      return;
+    }
+    delArmed = false; $('f-del').textContent = 'Delete my review';
+    try {
+      await db.doc('reviews/' + uid).delete();
+      $('f-name').value = ''; $('f-text').value = ''; setRating(0); filled = false;
+      msg('Your review was deleted.', 'ok');
+    } catch (e) { msg('Could not delete. Try again in a moment.', 'err'); }
+  });
+
+  render();
+
+  if (!(window.claude && window.claude.use)) {
+    setLocked('Open this page on Claude to read and write reviews.');
+    return;
+  }
+
+  Promise.all([window.claude.use('db'), window.claude.use('user')]).then(async function(res){
+    db = res[0]; var user = res[1];
+    if (!db) { setLocked('Sign in on Claude to read and write reviews.'); render(); return; }
+    try { uid = user ? await user.id() : null; } catch (e) { uid = null; }
+    var cw = null;
+    try { cw = user ? user.can('data.write') : null; } catch (e) { cw = null; }
+    canWrite = !!uid && cw !== false;
+    if (!uid) setLocked('Sign in on Claude to write a review. You can still read the others.');
+    else if (cw === false) setLocked('You have view-only access, so you can read reviews but not post one.');
+
+    db.collection('reviews').orderBy('ts', 'desc').limit(200).onSnapshot(function(snap){
+      reviews = snap.docs.map(function(d){
+        var v = d.data() || {};
+        return { id: d.id, name: String(v.name || 'Anonymous'), rating: Math.min(5, Math.max(1, Number(v.rating) || 5)), text: String(v.text || ''), ts: Number(v.ts) || 0 };
+      });
+      prefillOnce(); syncForm(); render();
+    }, function(){
+      $('list').textContent = '';
+      var e = document.createElement('div'); e.className = 'empty';
+      e.textContent = 'Reviews are unavailable right now.';
+      $('list').appendChild(e);
+    });
+  });
+})();
+</script>
+
+</body></html>
