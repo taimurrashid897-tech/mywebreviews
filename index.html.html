@@ -1,33 +1,27 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>My Web Work</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap">
 <style>
-  /* Layout: single column portfolio. Hero, two project cards, then a shared review wall with a form on the left and the live list on the right. */
   :root{
     --bg:#f5f6f4; --surface:#ffffff; --line:#dfe3df; --fg:#141a17; --muted:#5a655f;
     --accent:#0b8a5c; --accent-fg:#ffffff; --link:#2c4fd0; --star:#d98a00; --danger:#b4332a;
     --display:'Space Grotesk','Segoe UI',system-ui,sans-serif;
     --body:'DM Sans','Segoe UI',system-ui,sans-serif;
+    color-scheme:light;
   }
   @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
+    :root{
       --bg:#0e1311; --surface:#151c19; --line:#25302b; --fg:#e9efeb; --muted:#93a19a;
       --accent:#4fd69b; --accent-fg:#05150e; --link:#8fa6ff; --star:#f2b53a; --danger:#ff8a80;
       color-scheme:dark;
     }
   }
-  :root[data-theme="dark"]{
-    --bg:#0e1311; --surface:#151c19; --line:#25302b; --fg:#e9efeb; --muted:#93a19a;
-    --accent:#4fd69b; --accent-fg:#05150e; --link:#8fa6ff; --star:#f2b53a; --danger:#ff8a80;
-    color-scheme:dark;
-  }
   *{box-sizing:border-box}
-  body{
-    background:var(--bg); color:var(--fg); font-family:var(--body); font-size:16px; line-height:1.6;
-    padding-block:0;
-    padding-left:max(16px, env(safe-area-inset-left, 0px));
-    padding-right:max(16px, env(safe-area-inset-right, 0px));
-  }
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6;padding:0 16px}
   .wrap{max-width:1040px;margin:0 auto}
   header{padding:56px 0 24px}
   .badge{display:inline-block;font-size:13px;color:var(--accent);border:1px solid var(--line);padding:3px 12px;border-radius:99px;background:var(--surface)}
@@ -66,8 +60,7 @@
   .msg{font-size:14px;min-height:20px}
   .msg.err{color:var(--danger)}
   .msg.ok{color:var(--accent)}
-  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-  .linkbtn{background:none;border:0;cursor:pointer;color:var(--muted);font:inherit;font-size:13px;text-decoration:underline;padding:0}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
   .list{display:flex;flex-direction:column;gap:12px;min-width:0}
   .rev{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;min-width:0}
   .rev .top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
@@ -75,12 +68,11 @@
   .rev .st{color:var(--star);letter-spacing:2px}
   .rev .dt{font-size:12px;color:var(--muted)}
   .rev p{margin:6px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}
-  .rev.mine{border-color:var(--accent)}
   .empty{border:1px dashed var(--line);border-radius:12px;padding:28px 20px;color:var(--muted);text-align:center}
   footer{border-top:1px solid var(--line);padding:24px 0 48px;color:var(--muted);font-size:14px}
 </style>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap">
-
+</head>
+<body>
 <div class="wrap">
   <header>
     <span class="badge">Taking new website projects</span>
@@ -91,7 +83,7 @@
       <a class="btn ghost" href="#reviews">Read or write a review</a>
     </div>
     <div class="stats">
-      <div class="stat"><b id="s-sites">2</b><small>Websites made</small></div>
+      <div class="stat"><b>2</b><small>Websites made</small></div>
       <div class="stat"><b id="s-rev">0</b><small>Reviews</small></div>
       <div class="stat"><b id="s-avg">–</b><small>Average rating</small></div>
     </div>
@@ -119,7 +111,7 @@
     <h2>Reviews</h2>
     <div class="rv">
       <form class="card" id="form" autocomplete="off">
-        <h3 id="form-title">Leave a review</h3>
+        <h3>Leave a review</h3>
         <div>
           <label for="f-name">Your name</label>
           <input type="text" id="f-name" maxlength="40" placeholder="e.g. Rafi">
@@ -132,16 +124,12 @@
           <label for="f-text">Your review</label>
           <textarea id="f-text" maxlength="600" placeholder="What was it like working together?"></textarea>
         </div>
-        <div class="row">
-          <button class="btn" type="submit" id="f-send">Post review</button>
-          <button class="linkbtn" type="button" id="f-del" hidden>Delete my review</button>
-        </div>
+        <div class="hp" aria-hidden="true"><label for="f-site">Leave this empty</label><input type="text" id="f-site" tabindex="-1" autocomplete="off"></div>
+        <div><button class="btn" type="submit" id="f-send">Post review</button></div>
         <div class="msg" id="f-msg" role="status"></div>
-        <div class="hint" id="f-hint">One review per person. You can edit or delete yours later.</div>
+        <div class="hint">No account needed. Reviews appear right away.</div>
       </form>
-      <div class="list" id="list">
-        <div class="empty">Loading reviews…</div>
-      </div>
+      <div class="list" id="list"><div class="empty">Loading reviews…</div></div>
     </div>
   </section>
 
@@ -149,158 +137,94 @@
 </div>
 
 <script>
-(function(){
-  var $ = function(id){ return document.getElementById(id); };
-  $('yr').textContent = new Date().getFullYear();
+/* ===== PASTE YOUR SUPABASE DETAILS HERE (see setup.sql and the steps I gave you) ===== */
+const SUPABASE_URL = "https://bpgpexnatvzpanedvbll.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_BKG1QnHDxguB_dYbquRivQ_ZUGhfTlj";
+/* ======================================================================================= */
 
-  var db = null, uid = null, canWrite = false;
-  var reviews = [];
-  var rating = 0;
-  var delArmed = false;
+const $ = id => document.getElementById(id);
+$('yr').textContent = new Date().getFullYear();
+const configured = !SUPABASE_URL.includes('YOUR-PROJECT') && !SUPABASE_ANON_KEY.includes('YOUR-ANON');
+const API = SUPABASE_URL + '/rest/v1/reviews';
+const HEAD = { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY };
 
-  /* stars input */
-  var starsBox = $('f-stars');
-  for (var i = 1; i <= 5; i++) {
-    (function(n){
-      var b = document.createElement('button');
-      b.type = 'button'; b.className = 'star'; b.textContent = '★';
-      b.setAttribute('aria-label', n + ' star' + (n > 1 ? 's' : ''));
-      b.addEventListener('click', function(){ setRating(n); });
-      starsBox.appendChild(b);
-    })(i);
-  }
-  function setRating(n){
-    rating = n;
-    Array.prototype.forEach.call(starsBox.children, function(b, idx){
-      b.classList.toggle('on', idx < n);
-      b.setAttribute('aria-pressed', String(idx < n));
-    });
-  }
+let rating = 0;
+const starsBox = $('f-stars');
+for (let n = 1; n <= 5; n++) {
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'star'; b.textContent = '★';
+  b.setAttribute('aria-label', n + ' star' + (n > 1 ? 's' : ''));
+  b.addEventListener('click', () => setRating(n));
+  starsBox.appendChild(b);
+}
+function setRating(n){
+  rating = n;
+  [...starsBox.children].forEach((b, i) => { b.classList.toggle('on', i < n); b.setAttribute('aria-pressed', String(i < n)); });
+}
+function msg(t, k){ const m = $('f-msg'); m.textContent = t || ''; m.className = 'msg' + (k ? ' ' + k : ''); }
+function note(text){
+  const l = $('list'); l.textContent = '';
+  const e = document.createElement('div'); e.className = 'empty'; e.textContent = text; l.appendChild(e);
+}
 
-  function msg(text, kind){
-    var m = $('f-msg'); m.textContent = text || ''; m.className = 'msg' + (kind ? ' ' + kind : '');
-  }
-
-  function setLocked(reason){
-    ['f-name','f-text','f-send'].forEach(function(id){ $(id).disabled = true; });
-    Array.prototype.forEach.call(starsBox.children, function(b){ b.disabled = true; });
-    $('f-hint').textContent = reason;
-  }
-
-  function render(){
-    var list = $('list');
-    list.textContent = '';
-    var n = reviews.length;
-    $('s-rev').textContent = n;
-    $('s-avg').textContent = n ? (reviews.reduce(function(a, r){ return a + r.rating; }, 0) / n).toFixed(1) : '–';
-
-    if (!db) {
-      var e0 = document.createElement('div'); e0.className = 'empty';
-      e0.textContent = 'Reviews load when this page is opened on Claude while signed in.';
-      list.appendChild(e0); return;
-    }
-    if (!n) {
-      var e = document.createElement('div'); e.className = 'empty';
-      e.textContent = 'No reviews yet. Be the first to write one.';
-      list.appendChild(e); return;
-    }
-    reviews.forEach(function(r){
-      var card = document.createElement('div');
-      card.className = 'rev' + (r.id === uid ? ' mine' : '');
-      var top = document.createElement('div'); top.className = 'top';
-      var nm = document.createElement('span'); nm.className = 'nm';
-      nm.textContent = r.name + (r.id === uid ? ' (you)' : '');
-      var st = document.createElement('span'); st.className = 'st';
-      st.textContent = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
-      st.setAttribute('aria-label', r.rating + ' out of 5');
-      top.appendChild(nm); top.appendChild(st);
-      var p = document.createElement('p'); p.textContent = r.text;
-      var dt = document.createElement('div'); dt.className = 'dt';
-      dt.textContent = r.ts ? new Date(r.ts).toLocaleDateString(undefined, {year:'numeric', month:'short', day:'numeric'}) : '';
-      card.appendChild(top); card.appendChild(p); card.appendChild(dt);
-      list.appendChild(card);
-    });
-  }
-
-  function syncForm(){
-    var mine = reviews.filter(function(r){ return r.id === uid; })[0];
-    $('form-title').textContent = mine ? 'Edit your review' : 'Leave a review';
-    $('f-send').textContent = mine ? 'Update review' : 'Post review';
-    $('f-del').hidden = !mine;
-  }
-
-  var filled = false;
-  function prefillOnce(){
-    if (filled) return;
-    var mine = reviews.filter(function(r){ return r.id === uid; })[0];
-    if (mine) {
-      $('f-name').value = mine.name; $('f-text').value = mine.text; setRating(mine.rating); filled = true;
-    }
-  }
-
-  $('form').addEventListener('submit', async function(ev){
-    ev.preventDefault();
-    if (!db || !uid || !canWrite) return;
-    var name = $('f-name').value.trim(), text = $('f-text').value.trim();
-    if (!name) { msg('Enter your name.', 'err'); return; }
-    if (!rating) { msg('Pick a star rating.', 'err'); return; }
-    if (!text) { msg('Write a few words about your experience.', 'err'); return; }
-    $('f-send').disabled = true; msg('Posting…');
-    try {
-      await db.doc('reviews/' + uid).set({ name: name, rating: rating, text: text, ts: Date.now() });
-      msg('Thanks, your review is live.', 'ok');
-    } catch (e) {
-      msg(e && e.code === 'quota_exceeded' ? 'The review wall is full.' : 'Could not post your review. Try again in a moment.', 'err');
-    }
-    $('f-send').disabled = false;
+function render(rows){
+  $('s-rev').textContent = rows.length;
+  $('s-avg').textContent = rows.length ? (rows.reduce((a, r) => a + r.rating, 0) / rows.length).toFixed(1) : '–';
+  if (!rows.length) { note('No reviews yet. Be the first to write one.'); return; }
+  const l = $('list'); l.textContent = '';
+  rows.forEach(r => {
+    const c = document.createElement('div'); c.className = 'rev';
+    const top = document.createElement('div'); top.className = 'top';
+    const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = r.name;
+    const st = document.createElement('span'); st.className = 'st';
+    st.textContent = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+    st.setAttribute('aria-label', r.rating + ' out of 5');
+    top.append(nm, st);
+    const p = document.createElement('p'); p.textContent = r.text;
+    const d = document.createElement('div'); d.className = 'dt';
+    d.textContent = new Date(r.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    c.append(top, p, d); l.appendChild(c);
   });
+}
 
-  $('f-del').addEventListener('click', async function(){
-    if (!db || !uid) return;
-    if (!delArmed) {
-      delArmed = true; $('f-del').textContent = 'Click again to delete';
-      setTimeout(function(){ delArmed = false; $('f-del').textContent = 'Delete my review'; }, 4000);
-      return;
-    }
-    delArmed = false; $('f-del').textContent = 'Delete my review';
-    try {
-      await db.doc('reviews/' + uid).delete();
-      $('f-name').value = ''; $('f-text').value = ''; setRating(0); filled = false;
-      msg('Your review was deleted.', 'ok');
-    } catch (e) { msg('Could not delete. Try again in a moment.', 'err'); }
-  });
+async function load(){
+  if (!configured) { note('Reviews are not connected yet. Add your Supabase details at the top of the script.'); return; }
+  try {
+    const res = await fetch(API + '?select=id,name,rating,text,created_at&order=created_at.desc&limit=200', { headers: HEAD });
+    if (!res.ok) throw new Error(res.status);
+    const rows = await res.json();
+    render(rows.map(r => ({ ...r, rating: Math.min(5, Math.max(1, Number(r.rating) || 5)) })));
+  } catch (e) { note('Reviews could not be loaded right now.'); }
+}
 
-  render();
-
-  if (!(window.claude && window.claude.use)) {
-    setLocked('Open this page on Claude to read and write reviews.');
-    return;
-  }
-
-  Promise.all([window.claude.use('db'), window.claude.use('user')]).then(async function(res){
-    db = res[0]; var user = res[1];
-    if (!db) { setLocked('Sign in on Claude to read and write reviews.'); render(); return; }
-    try { uid = user ? await user.id() : null; } catch (e) { uid = null; }
-    var cw = null;
-    try { cw = user ? user.can('data.write') : null; } catch (e) { cw = null; }
-    canWrite = !!uid && cw !== false;
-    if (!uid) setLocked('Sign in on Claude to write a review. You can still read the others.');
-    else if (cw === false) setLocked('You have view-only access, so you can read reviews but not post one.');
-
-    db.collection('reviews').orderBy('ts', 'desc').limit(200).onSnapshot(function(snap){
-      reviews = snap.docs.map(function(d){
-        var v = d.data() || {};
-        return { id: d.id, name: String(v.name || 'Anonymous'), rating: Math.min(5, Math.max(1, Number(v.rating) || 5)), text: String(v.text || ''), ts: Number(v.ts) || 0 };
-      });
-      prefillOnce(); syncForm(); render();
-    }, function(){
-      $('list').textContent = '';
-      var e = document.createElement('div'); e.className = 'empty';
-      e.textContent = 'Reviews are unavailable right now.';
-      $('list').appendChild(e);
+$('form').addEventListener('submit', async ev => {
+  ev.preventDefault();
+  if ($('f-site').value) return;                       // spam trap
+  if (!configured) { msg('Reviews are not connected yet.', 'err'); return; }
+  const name = $('f-name').value.trim(), text = $('f-text').value.trim();
+  if (!name) return msg('Enter your name.', 'err');
+  if (!rating) return msg('Pick a star rating.', 'err');
+  if (!text) return msg('Write a few words about your experience.', 'err');
+  let last = 0; try { last = Number(localStorage.getItem('lastReview')) || 0; } catch (e) {}
+  if (Date.now() - last < 60000) return msg('Please wait a minute before posting again.', 'err');
+  $('f-send').disabled = true; msg('Posting…');
+  try {
+    const res = await fetch(API, {
+      method: 'POST',
+      headers: { ...HEAD, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+      body: JSON.stringify({ name, rating, text })
     });
-  });
-})();
+    if (!res.ok) throw new Error(res.status);
+    try { localStorage.setItem('lastReview', String(Date.now())); } catch (e) {}
+    $('f-name').value = ''; $('f-text').value = ''; setRating(0);
+    msg('Thanks, your review is live.', 'ok');
+    load();
+  } catch (e) { msg('Could not post your review. Try again in a moment.', 'err'); }
+  $('f-send').disabled = false;
+});
+
+load();
+setInterval(load, 30000);
 </script>
-
-</body></html>
+</body>
+</html>
