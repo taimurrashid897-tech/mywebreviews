@@ -96,7 +96,7 @@
         <h3>Pillars of Fortune SMP</h3>
         <p>Status website for a Minecraft SMP. Shows the server IP and ports with copy buttons, players online, the four game types and the Discord invite.</p>
         <div class="chips"><span>Minecraft</span><span>Live status</span><span>Community</span></div>
-        <a class="visit" href="https://pillars-of-fortune.vercel.app/" target="_blank" rel="noopener">Visit website →</a>
+        <a class="visit" href="https://aspect563.github.io/pillars-of-fortune/" target="_blank" rel="noopener">Visit website →</a>
       </div>
       <div class="card">
         <h3>just4le._ Clothing Shop</h3>
@@ -138,15 +138,16 @@
 
 <script>
 /* ===== PASTE YOUR SUPABASE DETAILS HERE (see setup.sql and the steps I gave you) ===== */
-const SUPABASE_URL = "https://bpgpexnatvzpanedvbll.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_BKG1QnHDxguB_dYbquRivQ_ZUGhfTlj";
+const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
+const SUPABASE_ANON_KEY = "YOUR-ANON-PUBLIC-KEY";
 /* ======================================================================================= */
 
 const $ = id => document.getElementById(id);
 $('yr').textContent = new Date().getFullYear();
 const configured = !SUPABASE_URL.includes('YOUR-PROJECT') && !SUPABASE_ANON_KEY.includes('YOUR-ANON');
 const API = SUPABASE_URL + '/rest/v1/reviews';
-const HEAD = { apikey: SUPABASE_ANON_KEY, Authorization: 'Bearer ' + SUPABASE_ANON_KEY };
+const HEAD = { apikey: SUPABASE_ANON_KEY };
+if (SUPABASE_ANON_KEY.startsWith('eyJ')) HEAD.Authorization = 'Bearer ' + SUPABASE_ANON_KEY; // legacy JWT keys only
 
 let rating = 0;
 const starsBox = $('f-stars');
